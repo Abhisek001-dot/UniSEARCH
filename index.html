@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Unisearch</title>
+<link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(120deg, #d4fc79, #96e6a1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .chatbox {
+      width: 680px;
+      max-width: 95%;
+      background: #ffffffcc;
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+      padding: 20px;
+    }
+
+    h3 {
+      text-align: center;
+      font-size: 1.8em;
+      margin-bottom: 15px;
+      color: #2e7d32;
+      text-shadow: 1px 1px 2px #b0f4ba;
+    }
+
+    .messages {
+      max-height: 340px;
+      overflow-y: auto;
+      padding: 10px;
+      border-radius: 10px;
+      background: #f7fff9;
+      border: 1px solid #d0f0d2;
+      margin-bottom: 10px;
+    }
+
+    .messages div {
+      margin-bottom: 10px;
+    }
+
+    .messages a {
+      display: block;
+      text-decoration: none;
+      background: #c8facc;
+      color: #1a1a1a;
+      padding: 6px 10px;
+      border-radius: 6px;
+      transition: background 0.3s;
+    }
+
+    .messages a:hover {
+      background: #a5f0ae;
+    }
+
+    .input-area {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+    }
+
+    button, input[type="file"] {
+      padding: 12px;
+      font-size: 1em;
+      border: none;
+      border-radius: 8px;
+      background: #66bb6a;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover, input[type="file"]:hover {
+      background: #4caf50;
+    }
+
+  </style>
+  
+</head>
+<body>
+  <div class="chatbox">
+    <h3>🌿 Unisearch</h3>
+    <div class="messages" id="messages"></div>
+    <div class="input-area">
+      <input type="text" id="userInput" placeholder="Ask something beautiful..." />
+      <button onclick="respond()">Ask</button>
+      <button onclick="startVoice()">🎤</button>
+      <input type="file" accept="image/*" onchange="searchImage(event)" />
+    </div>
+   
+  </div>
+
+  <script>
+
+  // your!! MIT invite you!! what???🤭🤭🤭 respond() function
+  function respond() {
+    // your chatbot logic i come toward baby
+  }
+
+  // responsed bellow()
+  document.getElementById("userInput").addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+      event.preventDefault(); // my toxic
+      respond();
+    }
+  });
+
+
+    function respond() {
+
+
+      const inputBox = document.getElementById("userInput");
+      const input = inputBox.value.trim();
+      const messages = document.getElementById("messages");
+      if (!input) return;
+
+      const encoded = encodeURIComponent(input);
+      const searchEngines = [
+        
+  { name: "Google Images", icon: "fas fa-image", url: `https://www.google.com/search?tbm=isch&q=${encoded}` },
+  { name: "Google Maps", icon: "fas fa-map-marker-alt", url: `https://www.google.com/maps/search/${encoded}` },
+  { name: "Google", icon: "fab fa-google", url: `https://www.google.com/search?q=${encoded}` },
+  { name: "Bing", icon: "fab fa-microsoft", url: `https://www.bing.com/search?q=${encoded}` },
+  { name: "Bing Maps", icon: "fas fa-map", url: `https://www.bing.com/maps?q=${encoded}` },
+  { name: "Bing Images", icon: "fas fa-images", url: `https://www.bing.com/images/search?q=${encoded}` },
+  { name: "Wikipedia", icon: "fab fa-wikipedia-w", url: `https://en.wikipedia.org/wiki/Special:Search?search=${encoded}` },
+  { name: "DuckDuckGo", icon: "fas fa-feather", url: `https://duckduckgo.com/?q=${encoded}` },
+  { name: "Brave", icon: "fas fa-mask", url: `https://search.brave.com/search?q=${encoded}` },
+  { name: "Safari (Google)", icon: "fab fa-safari", url: `https://www.google.com/search?q=${encoded}` },
+  { name: "YouTube (Google)", icon: "fab fa-youtube", url: `https://www.youtube.com/results?search_query=${encoded}` },
+  { name: "Instagram", icon: "fab fa-instagram", url: `https://www.instagram.com/explore/tags/${encoded}/` },
+  { name: "X", icon: "fab fa-X", url: `https://x.ai/grok/${encoded}/` },
+  { name: "Facebook", icon: "fab fa-facebook", url: `https://www.facebook.com/search/top?q=${encoded}` },
+  { name: "ChatGPT", icon: "fas fa-robot", url: `https://chat.openai.com/?q=${encoded}` },
+  { name: "Copilot", icon: "fas fa-compass", url: `https://copilot.microsoft.com/?q=${encoded}` },
+  { name: "Gemini", icon: "fas fa-star", url: `https://gemini.google.com/app?q=${encoded}` },
+  { name: "Grok(XAi)", icon: "fas fa-star", url: `https://grok.google.com/app?q=${encoded}` },
+  
+];
+      messages.innerHTML += `<div><strong>You:</strong> ${input}</div>`;
+      messages.innerHTML += `<div><strong>Bot:</strong> Here are your search links:</div>`;
+      searchEngines.forEach(site => {
+        messages.innerHTML += `<a href="${site.url}" target="_blank">${site.name}</a>`;
+      });
+
+      inputBox.value = "";
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    function startVoice() {
+      const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+      recognition.lang = 'en-US';
+      recognition.start();
+      recognition.onresult = function(event) {
+        const transcript = event.results[0][0].transcript;
+        document.getElementById("userInput").value = transcript;
+        respond();
+      };
+    }
+
+    function searchImage(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const query = encodeURIComponent(file.name.replace(/\.[^/.]+$/, ""));
+      const messages = document.getElementById("messages");
+
+      messages.innerHTML += `<div><strong>You:</strong> [Image: ${file.name}]</div>`;
+      messages.innerHTML += `<div><strong>Bot:</strong> Find similar images for: <strong>${file.name}</strong></div>`;
+
+      const searchLinks = [
+        { name: "Google Reverse Image", url: `https://images.google.com` },
+        { name: "Bing Visual Search", url: `https://www.bing.com/visualsearch` },
+        { name: "Yandex Images", url: `https://yandex.com/images/search` },
+        { name: "TinEye", url: `https://tineye.com/` },
+        { name: "Lenso.ai", url: `https://www.lenso.ai/` }
+      ];
+
+      searchLinks.forEach(site => {
+        messages.innerHTML += `<a href="${site.url}" target="_blank">🔍 ${site.name}</a>`;
+      });
+
+      messages.scrollTop = messages.scrollHeight;
+    }
+    self.addEventListener("install", e => {
+  e.waitUntil(
+    caches.open("chatbot-cache").then(cache => {
+      return cache.addAll(["./", "./index.html", "./script.js", "./style.css"]);
+    })
+  );
+});
+
+self.addEventListener("fetch", e => {
+  e.respondWith(
+    caches.match(e.request).then(response => response || fetch(e.request))
+  );
+});
+  </script>
+  
+</script>
+</body>
+<div>
+   
+</html>
