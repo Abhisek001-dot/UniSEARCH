@@ -99,7 +99,7 @@
 </head>
 <body>
   <div class="chatbox">
-    <h3>🌿 Unisearch</h3>
+    <h3>🌿 UniSearch</h3>
     <div class="messages" id="messages"></div>
     <div class="input-area">
       <input type="text" id="userInput" placeholder="Ask something beautiful..." />
@@ -186,7 +186,7 @@
       const messages = document.getElementById("messages");
 
       messages.innerHTML += `<div><strong>You:</strong> [Image: ${file.name}]</div>`;
-      messages.innerHTML += `<div><strong>Bot:</strong> Find similar images for: <strong>${file.name}</strong></div>`;
+      messages.innerHTML += `<div><strong>Uni:</strong> Find similar images for: <strong>${file.name}</strong></div>`;
 
       const searchLinks = [
         { name: "Google Reverse Image", url: `https://images.google.com` },
